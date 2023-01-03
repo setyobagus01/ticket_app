@@ -77,14 +77,13 @@ class PemesananTiketController extends Controller
     {
         $input = $request->all();
 
-        $tiket = PemesananTiket::with(['paket'])->where('invoice_number',$input['invoice_number'])->get()->first();
-        if($tiket->total <= 0) {
-            return back()->with('info', 'Pengunjung sudah melunasi pembayaran');
+        $tiket = PemesananTiket::with(['paket'])->where('invoice_number', $input['invoice_number'])->get()->first();
+        if ($tiket->total <= 0) {
             $tiket->is_pay = 1;
+            return back()->with('info', 'Pengunjung sudah melunasi pembayaran');
         } else {
             return back()->with('warning', 'Pengunjung belum melunasi pembayaran');
         }
-
     }
 
     /**
@@ -109,7 +108,7 @@ class PemesananTiketController extends Controller
         $tiket = PemesananTiket::with(['paket'])->find($id);
         $paket = Paket::all();
         if (empty($tiket)) {
-            return back()->with('error','Tiket tidak ditemukan');
+            return back()->with('error', 'Tiket tidak ditemukan');
         }
         return view('tiket.edit', ["tiket" => $tiket, "paket" => $paket]);
     }
@@ -136,7 +135,7 @@ class PemesananTiketController extends Controller
         $tiket = PemesananTiket::with(['paket'])->find($id);
 
         if (empty($tiket)) {
-            return redirect()->back()->with('error','Tiket tidak ditemukan');
+            return redirect()->back()->with('error', 'Tiket tidak ditemukan');
         }
 
         return ["tiket" => $tiket, "qrcode" => $tiket->qrcode];
@@ -148,8 +147,11 @@ class PemesananTiketController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
-        //
+        $tiket = PemesananTiket::find($id);
+        $tiket->delete();
+
+        return redirect()->route('tiket.index')->with('success', 'Tiket berhasil dihapus');
     }
 }

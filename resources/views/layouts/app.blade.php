@@ -115,20 +115,20 @@
         </div>
         <div class="right-sidebar-body customscroll">
             <div class="right-sidebar-body-content">
-                <h4 class="weight-600 font-18 pb-10">Header Background</h4>
-                <div class="sidebar-btn-group pb-30 mb-10">
+                <h4 class="pb-10 weight-600 font-18">Header Background</h4>
+                <div class="mb-10 sidebar-btn-group pb-30">
                     <a href="javascript:void(0);" class="btn btn-outline-primary header-white active">White</a>
                     <a href="javascript:void(0);" class="btn btn-outline-primary header-dark">Dark</a>
                 </div>
 
-                <h4 class="weight-600 font-18 pb-10">Sidebar Background</h4>
-                <div class="sidebar-btn-group pb-30 mb-10">
+                <h4 class="pb-10 weight-600 font-18">Sidebar Background</h4>
+                <div class="mb-10 sidebar-btn-group pb-30">
                     <a href="javascript:void(0);" class="btn btn-outline-primary sidebar-light">White</a>
                     <a href="javascript:void(0);" class="btn btn-outline-primary sidebar-dark active">Dark</a>
                 </div>
 
-                <h4 class="weight-600 font-18 pb-10">Menu Dropdown Icon</h4>
-                <div class="sidebar-radio-group pb-10 mb-10">
+                <h4 class="pb-10 weight-600 font-18">Menu Dropdown Icon</h4>
+                <div class="pb-10 mb-10 sidebar-radio-group">
                     <div class="custom-control custom-radio custom-control-inline">
                         <input type="radio" id="sidebaricon-1" name="menu-dropdown-icon" class="custom-control-input"
                             value="icon-style-1" checked="" />
@@ -148,8 +148,8 @@
                     </div>
                 </div>
 
-                <h4 class="weight-600 font-18 pb-10">Menu List Icon</h4>
-                <div class="sidebar-radio-group pb-30 mb-10">
+                <h4 class="pb-10 weight-600 font-18">Menu List Icon</h4>
+                <div class="mb-10 sidebar-radio-group pb-30">
                     <div class="custom-control custom-radio custom-control-inline">
                         <input type="radio" id="sidebariconlist-1" name="menu-list-icon"
                             class="custom-control-input" value="icon-list-style-1" checked="" />
@@ -188,7 +188,7 @@
                     </div>
                 </div>
 
-                <div class="reset-options pt-30 text-center">
+                <div class="text-center reset-options pt-30">
                     <button class="btn btn-danger" id="reset-settings">
                         Reset Settings
                     </button>

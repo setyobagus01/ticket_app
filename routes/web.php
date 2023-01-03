@@ -32,6 +32,7 @@ Route::middleware([
     Route::post('/tiket', [PemesananTiketController::class, 'store'])->name('tiket.store');
     Route::get('/tiket/edit/{id}', [PemesananTiketController::class, 'edit'])->name('tiket.edit');
     Route::patch('/tiket/update/{id}', [PemesananTiketController::class, 'update'])->name('tiket.update');
+    Route::post('/tiket/delete/{id}', [PemesananTiketController::class, 'delete'])->name('tiket.delete');
     Route::get('/tiket/scan', [PemesananTiketController::class, 'scan'])->name('tiket.scan');
     Route::post('/tiket/scan', [PemesananTiketController::class, 'qrcode'])->name('tiket.qrcode');
     Route::get('/tiket/label/{id}', [PemesananTiketController::class, 'label'])->name('tiket.label');
