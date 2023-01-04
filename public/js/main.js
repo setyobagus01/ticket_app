@@ -89,6 +89,27 @@
             }
         }
     });
+
+    $('#purchase').submit(function (e) {
+        e.preventDefault(); 
+        let name = $('#name').val();
+        let qty = $('#qty').val();
+        let package_option = $("#package_option").val();
+        let message = $("#message").val();
+        let pesan = "";
+        if (package_option == "Booking") {
+            pesan = `Saya ingin memesan paket ${package_option} atas nama ${name} dengan request tambahan ${message}  `;
+        } else {
+            pesan = `Saya ingin memesan paket ${package_option} dengan jumlah ${qty} buah atas nama ${name} pesan: ${message}`;
+        }
+
+        
+
+
+        window.location.href = `https://wa.me/+6281584802207?text=${pesan}`;
+    });
+
+
     
 })(jQuery);
 
