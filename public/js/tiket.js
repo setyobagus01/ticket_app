@@ -55,3 +55,32 @@ const deleteTiket = (id) => {
     $("#modalHapusData").find("input[name='id']").val(id);
     $('#modalHapusData').modal('show');
 }
+
+/* Create & Edit Tiket [START] */
+function totalPay() {
+    let paket = $("#paket").val().split(", ").map(Number)[1];
+    let qty = parseInt($("#qty").val());
+    let down_payment = parseInt($("#down_payment").val());
+    let additional_cost = parseInt($("#additional_cost").val());
+
+    let totalPay = paket * qty + additional_cost - down_payment;
+    $("#totalPay").val(totalPay);
+    console.log(additional_cost);
+    console.log(down_payment);
+    console.log(qty);
+    console.log(paket);
+}
+totalPay();
+$("#paket").change(function () {
+    totalPay();
+});
+$("#qty").change(function () {
+    totalPay();
+});
+$("#down_payment").change(function () {
+    totalPay();
+});
+$("#additional_cost").change(function () {
+    totalPay();
+});
+/* Create & Edit Tiket [END] */

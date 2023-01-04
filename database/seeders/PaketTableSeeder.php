@@ -17,7 +17,7 @@ class PaketTableSeeder extends Seeder
     {
         $paket = [
             [
-                'name' => 'Regular',
+                'name' => 'Reguler',
                 'price' => 20000,
                 'created_at' => now(),
                 'updated_at' => now(),

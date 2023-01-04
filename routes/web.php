@@ -23,9 +23,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [PemesananTiketController::class, 'dashboard'])->name('dashboard');
 
     Route::get('/tiket', [PemesananTiketController::class, 'index'])->name('tiket.index');
     Route::get('/tiket/create', [PemesananTiketController::class, 'create'])->name('tiket.create');

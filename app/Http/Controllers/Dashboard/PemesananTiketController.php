@@ -7,12 +7,18 @@ use App\Models\Paket;
 use Illuminate\Http\Request;
 use App\Models\PemesananTiket;
 use App\Http\Controllers\Controller;
-use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\PemesananTiketExport;
 use App\DataTables\PemesananTiketDataTable;
 
 class PemesananTiketController extends Controller
 {
+    public function dashboard()
+    {
+        $data = PemesananTiket::with('paket')->get();
+        return view('dashboard', [
+            'data' => $data,
+        ]);
+    }
     /**
      * Display a listing of the resource.
      *

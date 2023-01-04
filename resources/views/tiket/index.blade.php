@@ -10,6 +10,11 @@
     text-align: center !important;
   }
 
+  .px-20 {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
   @import url('https://fonts.googleapis.com/css?family=Oswald');
 </style>
 <link rel="stylesheet" type="text/css" href="{{ asset('vendors/styles/ticket.css') }}" />
@@ -54,7 +59,7 @@
     <div class="pd-20">
       <h4 class="text-blue h4">Table Pemesanan Tiket</h4>
     </div>
-    <div class="flex-row md-20 d-flex">
+    <div class="flex-row px-20 d-flex">
         <button class="mx-1 btn btn-sm btn-success" data-toggle="modal" data-target="#modalCetakDataTiket"><i class="icon-copy fa fa-print" aria-hidden="true"></i> Cetak Data Excel</button>
     </div>
     <div class="pb-20">
