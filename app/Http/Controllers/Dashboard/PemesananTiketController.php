@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\DataTables\PemesananTiketDataTable;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Paket;
-use App\Models\PemesananTiket;
 use Carbon\Carbon;
+use App\Models\Paket;
+use Illuminate\Http\Request;
+use App\Models\PemesananTiket;
+use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\PemesananTiketExport;
+use App\DataTables\PemesananTiketDataTable;
 
 class PemesananTiketController extends Controller
 {
@@ -153,5 +155,13 @@ class PemesananTiketController extends Controller
         $tiket->delete();
 
         return redirect()->route('tiket.index')->with('success', 'Tiket berhasil dihapus');
+    }
+
+    public function export(Request $request)
+    {
+        $startDate = Carbon::createFromFormat('Y-m-d H', $request['start_date'] . '0')->startOfDay()->toDateTimeString();
+        $endDate = Carbon::createFromFormat('Y-m-d H', $request['end_date'] . '23')->endOfDay()->toDateTimeString();
+
+        return (new PemesananTiketExport($startDate, $endDate))->download('pemesanan_tiket_' . $startDate . '-' . $endDate . '.xlsx');
     }
 }

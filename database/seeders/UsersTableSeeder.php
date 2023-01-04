@@ -25,7 +25,15 @@ class UsersTableSeeder extends Seeder
                 'remember_token' => NULL,
                 'created_at' => date('Y-m-d h:i:s'),
                 'updated_at' => date('Y-m-d h:i:s'),
-            ]
+            ],
+            [
+                'name' => 'Test',
+                'email' => 'test@test.com',
+                'password' => Hash::make('test'),
+                'remember_token' => NULL,
+                'created_at' => date('Y-m-d h:i:s'),
+                'updated_at' => date('Y-m-d h:i:s'),
+            ],
         ];
 
         User::insert($users);

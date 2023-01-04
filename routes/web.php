@@ -36,4 +36,5 @@ Route::middleware([
     Route::get('/tiket/scan', [PemesananTiketController::class, 'scan'])->name('tiket.scan');
     Route::post('/tiket/scan', [PemesananTiketController::class, 'qrcode'])->name('tiket.qrcode');
     Route::get('/tiket/label/{id}', [PemesananTiketController::class, 'label'])->name('tiket.label');
+    Route::post('/tiket/export/', [PemesananTiketController::class, 'export'])->name('tiket.export');
 });

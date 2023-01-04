@@ -39,6 +39,7 @@
         <div class="text-right col-md-6 col-sm-12">
 
           <a href='{{ route('tiket.create') }}' class="btn btn-primary" role="button">
+            <i class="icon-copy fa fa-plus" aria-hidden="true"></i>
             Buat Tiket
           </a>
 
@@ -49,9 +50,12 @@
 
   <!-- Checkbox select Datatable End -->
   <!-- Export Datatable start -->
-  <div class="card-box mb-30">
+  <div class="card-box">
     <div class="pd-20">
-      <h4 class="text-blue h4">Data Table with Export Buttons</h4>
+      <h4 class="text-blue h4">Table Pemesanan Tiket</h4>
+    </div>
+    <div class="flex-row md-20 d-flex">
+        <button class="mx-1 btn btn-sm btn-success" data-toggle="modal" data-target="#modalCetakDataTiket"><i class="icon-copy fa fa-print" aria-hidden="true"></i> Cetak Data Excel</button>
     </div>
     <div class="pb-20">
       <div class="card-body">
