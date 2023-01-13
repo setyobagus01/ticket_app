@@ -83,7 +83,7 @@ class LandingController extends Controller
         //
     }
 
-    public function paket() {
-
+    public function paket()
+    {
     }
 }

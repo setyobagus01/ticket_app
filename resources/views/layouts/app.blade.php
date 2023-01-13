@@ -92,13 +92,17 @@
                         <a class="dropdown-item" href="profile.html"><i class="dw dw-user1"></i> Profile</a>
                         <a class="dropdown-item" href="profile.html"><i class="dw dw-settings2"></i> Setting</a>
                         <a class="dropdown-item" href="faq.html"><i class="dw dw-help"></i> Help</a>
-                        <a class="dropdown-item" href="login.html"><i class="dw dw-logout"></i> Log Out</a>
+                        <form method="POST" action="{{ route('logout') }}" x-data>
+                            @csrf
+
+                            <button type='submit' class="dropdown-item" @click.prevent="$root.submit();">
+                                <i class="dw dw-logout"></i> Log out
+                                </a>
+                        </form>
+                        {{-- <a class="dropdown-item" href="{{ route('logout') }}"><i class="dw dw-logout"></i> Log
+                            Out</a> --}}
                     </div>
                 </div>
-            </div>
-            <div class="github-link">
-                <a href="https://github.com/dropways/deskapp" target="_blank"><img src="vendors/images/github.svg"
-                        alt="" /></a>
             </div>
         </div>
     </div>
@@ -210,26 +214,28 @@
         <div class="menu-block customscroll">
             <div class="sidebar-menu">
                 <ul id="accordion-menu">
-
                     <li>
                         <a href="/dashboard" class="dropdown-toggle no-arrow">
                             <span class="micon bi bi-house"></span><span class="mtext">Home</span>
                         </a>
                     </li>
-                    
+                    @role('owner|admin|ticket_in')
+                        <li>
+                            <a href="/tiket" class="dropdown-toggle no-arrow">
+                                <span class="micon bi bi-calendar4-week"></span><span class="mtext">Tiket</span>
+                            </a>
+                        </li>
+                    @endrole
+                    @role('owner|ticket_in|ticket_out')
+                        <li>
+                            <a href="/tiket/scan" class="dropdown-toggle no-arrow">
+                                <span class="micon bi bi-diagram-3"></span><span class="mtext">Scan</span>
+                            </a>
+                        </li>
+                    @endrole
                     <li>
-                        <a href="/tiket" class="dropdown-toggle no-arrow">
-                            <span class="micon bi bi-calendar4-week"></span><span class="mtext">Tiket</span>
-                        </a>
-                    </li>
-                   
-                   
-                    {{-- <li>
-                        <a href="sitemap.html" class="dropdown-toggle no-arrow">
-                            <span class="micon bi bi-diagram-3"></span><span class="mtext">Sitemap</span>
-                        </a>
-                    </li>
-                    <li>
+
+                        {{--
                         <a href="chat.html" class="dropdown-toggle no-arrow">
                             <span class="micon bi bi-chat-right-dots"></span><span class="mtext">Chat</span>
                         </a>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\DataTables\DashboardDataTable;
 use Carbon\Carbon;
 use App\Models\Paket;
 use Illuminate\Http\Request;
@@ -12,10 +13,10 @@ use App\DataTables\PemesananTiketDataTable;
 
 class PemesananTiketController extends Controller
 {
-    public function dashboard()
+    public function dashboard(DashboardDataTable $dataTable)
     {
         $data = PemesananTiket::with('paket')->get();
-        return view('dashboard', [
+        return $dataTable->render('dashboard', [
             'data' => $data,
         ]);
     }
@@ -52,8 +53,17 @@ class PemesananTiketController extends Controller
         $input = $request->all();
         $input['paket_id'] = explode(", ", $input['paket_id'])[0];
         $input['invoice_number'] = $this->getInvoice(auth()->user()->id);
-        $input['is_pay'] = 0;
+        if ($input['total'] <= 0) {
+
+            $input['is_pay'] = 1;
+        } else {
+            $input['is_pay'] = 0;
+        }
         $input['expired_date'] = Carbon::now()->addDays(7);
+        if (auth()->user()->hasRole('ticket_in')) {
+            $input['tiket_masuk'] = now();
+        }
+
         PemesananTiket::create($input);
         return redirect('tiket');
     }
@@ -78,6 +88,7 @@ class PemesananTiketController extends Controller
 
     public function scan()
     {
+
         return view('tiket.scan');
     }
 
@@ -86,11 +97,20 @@ class PemesananTiketController extends Controller
         $input = $request->all();
 
         $tiket = PemesananTiket::with(['paket'])->where('invoice_number', $input['invoice_number'])->get()->first();
-        if ($tiket->total <= 0) {
-            $tiket->is_pay = 1;
-            return back()->with('info', 'Pengunjung sudah melunasi pembayaran');
+        if (auth()->user()->hasRole('ticket_in')) {
+            if ($tiket->total <= 0) {
+                $tiket->update([
+                    "tiket_masuk" => is_null($tiket->tiket_masuk) ? now() : $tiket->tiket_masuk,
+                    "is_pay" => 1
+                ]);
+
+                return back()->with('info', 'Pengunjung sudah melunasi pembayaran');
+            } else {
+                return back()->with('warning', 'Pengunjung belum melunasi pembayaran');
+            }
         } else {
-            return back()->with('warning', 'Pengunjung belum melunasi pembayaran');
+            $tiket->update(["tiket_keluar" => now()]);
+            return back()->with('info', 'Scan berhasil');
         }
     }
 
@@ -133,6 +153,9 @@ class PemesananTiketController extends Controller
         $input = $request->all();
         $tiket = PemesananTiket::find($id);
         $input['paket_id'] = explode(", ", $input['paket_id'])[0];
+        if ($input['total'] <= 0) {
+            $input['is_pay'] = 1;
+        }
         $tiket->update($input);
 
         return redirect(route('tiket.index'))->with('success', 'Tiket berhasil diupdate');

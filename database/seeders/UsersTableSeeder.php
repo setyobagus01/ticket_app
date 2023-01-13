@@ -17,25 +17,47 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $users = [
-            [
-                'name' => 'Boby Wahyudi',
-                'email' => 'boby@gmail.com',
-                'password' => Hash::make('admin123'),
-                'remember_token' => NULL,
-                'created_at' => date('Y-m-d h:i:s'),
-                'updated_at' => date('Y-m-d h:i:s'),
-            ],
-            [
-                'name' => 'Test',
-                'email' => 'test@test.com',
-                'password' => Hash::make('test'),
-                'remember_token' => NULL,
-                'created_at' => date('Y-m-d h:i:s'),
-                'updated_at' => date('Y-m-d h:i:s'),
-            ],
-        ];
 
-        User::insert($users);
+        $owner = User::create([
+            'name' => 'Owner',
+            'email' => 'owner@main.com',
+            'password' => Hash::make('admin123'),
+            'remember_token' => NULL,
+
+            'created_at' => date('Y-m-d h:i:s'),
+            'updated_at' => date('Y-m-d h:i:s'),
+        ]);
+        $admin = User::create([
+            'name' => 'Admin',
+            'email' => 'admin@main.com',
+            'password' => Hash::make('admin123'),
+            'remember_token' => NULL,
+
+            'created_at' => date('Y-m-d h:i:s'),
+            'updated_at' => date('Y-m-d h:i:s'),
+        ]);
+        $ticket_in = User::create([
+            'name' => 'Petugas 1',
+            'email' => 'ticket_in@main.com',
+            'password' => Hash::make('admin123'),
+            'remember_token' => NULL,
+
+            'created_at' => date('Y-m-d h:i:s'),
+            'updated_at' => date('Y-m-d h:i:s'),
+        ]);
+        $ticket_out = User::create([
+            'name' => 'Petugas 2',
+            'email' => 'ticket_out@main.com',
+            'password' => Hash::make('admin123'),
+            'remember_token' => NULL,
+
+            'created_at' => date('Y-m-d h:i:s'),
+            'updated_at' => date('Y-m-d h:i:s'),
+        ]);
+
+        $owner->assignRole('owner');
+        $admin->assignRole('admin');
+        $ticket_in->assignRole('ticket_in');
+        $ticket_out->assignRole('ticket_out');
     }
 }

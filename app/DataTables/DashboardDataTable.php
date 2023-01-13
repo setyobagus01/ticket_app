@@ -3,28 +3,24 @@
 namespace App\DataTables;
 
 use App\Models\PemesananTiket;
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder as QueryBuilder;
-use Yajra\DataTables\EloquentDataTable;
-use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
+use Yajra\DataTables\Html\Editor\Editor;
+use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-
-class PemesananTiketDataTable extends DataTable
+class DashboardDataTable extends DataTable
 {
     /**
      * Build DataTable class.
      *
-     * @param QueryBuilder $query Results from query() method.
-     * @return \Yajra\DataTables\EloquentDataTable
+     * @param mixed $query Results from query() method.
+     * @return \Yajra\DataTables\DataTableAbstract
      */
-    public function dataTable(QueryBuilder $query): EloquentDataTable
+    public function dataTable($query)
     {
-        return (new EloquentDataTable($query))
-            ->addColumn('action', 'tiket.datatables-action')
-            ->setRowId('id');
+        return datatables()
+            ->eloquent($query);
     }
 
     /**
@@ -33,9 +29,10 @@ class PemesananTiketDataTable extends DataTable
      * @param \App\Models\PemesananTiket $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(PemesananTiket $model): QueryBuilder
+    public function query(PemesananTiket $model)
     {
-        return $model->with(['paket'])->newQuery();
+
+        return $model->with(['paket'])->orderBy('created_at', 'DESC')->newQuery();
     }
 
     /**
@@ -43,10 +40,10 @@ class PemesananTiketDataTable extends DataTable
      *
      * @return \Yajra\DataTables\Html\Builder
      */
-    public function html(): HtmlBuilder
+    public function html()
     {
         return $this->builder()
-            ->setTableId('pemesanantiket-table')
+            ->setTableId('dashboard-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->responsive(true)
@@ -54,11 +51,11 @@ class PemesananTiketDataTable extends DataTable
     }
 
     /**
-     * Get the dataTable columns definition.
+     * Get columns.
      *
      * @return array
      */
-    public function getColumns(): array
+    protected function getColumns()
     {
         return [
             Column::make('id'),
@@ -70,7 +67,6 @@ class PemesananTiketDataTable extends DataTable
             Column::make('total'),
             Column::make('is_pay'),
             Column::make('expired_date'),
-            Column::computed('action')
         ];
     }
 

@@ -25,14 +25,25 @@ Route::middleware([
 ])->group(function () {
     Route::get('/dashboard', [PemesananTiketController::class, 'dashboard'])->name('dashboard');
 
-    Route::get('/tiket', [PemesananTiketController::class, 'index'])->name('tiket.index');
-    Route::get('/tiket/create', [PemesananTiketController::class, 'create'])->name('tiket.create');
-    Route::post('/tiket', [PemesananTiketController::class, 'store'])->name('tiket.store');
-    Route::get('/tiket/edit/{id}', [PemesananTiketController::class, 'edit'])->name('tiket.edit');
-    Route::patch('/tiket/update/{id}', [PemesananTiketController::class, 'update'])->name('tiket.update');
-    Route::post('/tiket/delete/{id}', [PemesananTiketController::class, 'delete'])->name('tiket.delete');
-    Route::get('/tiket/scan', [PemesananTiketController::class, 'scan'])->name('tiket.scan');
-    Route::post('/tiket/scan', [PemesananTiketController::class, 'qrcode'])->name('tiket.qrcode');
-    Route::get('/tiket/label/{id}', [PemesananTiketController::class, 'label'])->name('tiket.label');
-    Route::post('/tiket/export/', [PemesananTiketController::class, 'export'])->name('tiket.export');
+
+
+
+
+    Route::group(['middleware' => ['role:owner|admin|ticket_in']], function () {
+        Route::get('/tiket', [PemesananTiketController::class, 'index'])->name('tiket.index');
+        Route::get('/tiket/create', [PemesananTiketController::class, 'create'])->name('tiket.create');
+        Route::post('/tiket', [PemesananTiketController::class, 'store'])->name('tiket.store');
+        Route::get('/tiket/edit/{id}', [PemesananTiketController::class, 'edit'])->name('tiket.edit');
+        Route::patch('/tiket/update/{id}', [PemesananTiketController::class, 'update'])->name('tiket.update');
+        Route::post('/tiket/delete/{id}', [PemesananTiketController::class, 'delete'])->name('tiket.delete');
+        Route::get('/tiket/label/{id}', [PemesananTiketController::class, 'label'])->name('tiket.label');
+    });
+    Route::group(['middleware' => ['role:owner|ticket_in|ticket_out']], function () {
+        Route::get('/tiket/scan', [PemesananTiketController::class, 'scan'])->name('tiket.scan');
+        Route::post('/tiket/scan', [PemesananTiketController::class, 'qrcode'])->name('tiket.qrcode');
+    });
+
+    Route::group(['middleware' => ['role:owner|admin']], function () {
+        Route::post('/tiket/export/', [PemesananTiketController::class, 'export'])->name('tiket.export');
+    });
 });
