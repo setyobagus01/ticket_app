@@ -63,6 +63,7 @@ class PemesananTiketDataTable extends DataTable
         return [
             Column::make('id'),
             Column::make('invoice_number'),
+            Column::make('buyer_name'),
             Column::make('paket.name'),
             Column::make('jumlah_pemesanan'),
             Column::make('down_payment'),

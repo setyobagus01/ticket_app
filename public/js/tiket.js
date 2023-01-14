@@ -2,6 +2,10 @@ $("#printLabel").click(function () {
     screenshot();
 });
 
+if ($("#paket").val() == "2, 1500000") {
+    $("#qty").hide();
+}
+
 $("#paket").on("change", function () {
     if (this.value == "2, 1500000") {
         $("#qty").hide();

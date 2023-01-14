@@ -1,5 +1,14 @@
 @extends('layouts.app')
 @section('container')
+    @if ($errors->any())
+        <ul class="list-group mb-5">
+            @foreach ($errors->all() as $message)
+                <li class="list-group-item list-group-item-danger">
+                    {{ $message }}
+                </li>
+            @endforeach
+        </ul>
+    @endif
     <div class="pd-20 card-box mb-30">
         <div class="clearfix">
             <div class="pull-left">
@@ -23,6 +32,15 @@
                         @endif
                     @endforeach
                 </select>
+            </div>
+
+        </div>
+        <div class="form-group row">
+            {{-- <label class="col-sm-12 col-md-2 col-form-label">Jumlah Tiket</label> --}}
+            {!! Form::label('buyer_name', 'Buyer Name', ['class' => 'col-sm-12 col-md-2 col-form-label']) !!}
+            <div class="col-sm-12 col-md-10">
+                {{-- <input id="qty" type="text" value="1" name="jumlah_pemesanan" /> --}}
+                {!! Form::text('buyer_name', null, ['id' => 'buyerName', 'class' => 'form-control']) !!}
             </div>
 
         </div>

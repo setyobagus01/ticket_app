@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('pemesanan_tiket', function (Blueprint $table) {
             $table->id();
             $table->string('invoice_number');
+            $table->string('buyer_name');
             $table->foreignId('paket_id')->index('fk_pemesanan_tiket_to_paket');
             $table->integer('jumlah_pemesanan');
             $table->integer('down_payment');

@@ -1,5 +1,14 @@
 @extends('layouts.app')
 @section('container')
+    @if ($errors->any())
+        <ul class="list-group mb-5">
+            @foreach ($errors->all() as $message)
+                <li class="list-group-item list-group-item-danger">
+                    {{ $message }}
+                </li>
+            @endforeach
+        </ul>
+    @endif
     <div class="pd-20 card-box mb-30">
         <div class="clearfix">
             <div class="pull-left">
@@ -10,6 +19,12 @@
         </div>
         <form action="{{ route('tiket.store') }}" method="POST">
             @csrf
+            <div class="form-group row">
+                <label class="col-sm-12 col-md-2 col-form-label">Buyer Name</label>
+                <div class="col-sm-12 col-md-10">
+                    <input id="buyerName" class="form-control" type="text" placeholder="Johnny Brown" name="buyer_name">
+                </div>
+            </div>
             <div class="form-group row">
                 <label class="col-sm-12 col-md-2 col-form-label">Paket</label>
                 <div class="col-sm-12 col-md-10">

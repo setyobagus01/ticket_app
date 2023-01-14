@@ -10,6 +10,8 @@ use App\Models\PemesananTiket;
 use App\Http\Controllers\Controller;
 use App\Exports\PemesananTiketExport;
 use App\DataTables\PemesananTiketDataTable;
+use App\Http\Requests\QrCodeRequest;
+use App\Http\Requests\TicketRequest;
 
 class PemesananTiketController extends Controller
 {
@@ -48,7 +50,7 @@ class PemesananTiketController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TicketRequest $request)
     {
         $input = $request->all();
         $input['paket_id'] = explode(", ", $input['paket_id'])[0];
@@ -92,25 +94,29 @@ class PemesananTiketController extends Controller
         return view('tiket.scan');
     }
 
-    public function qrcode(Request $request)
+    public function qrcode(QrCodeRequest $request)
     {
         $input = $request->all();
 
         $tiket = PemesananTiket::with(['paket'])->where('invoice_number', $input['invoice_number'])->get()->first();
-        if (auth()->user()->hasRole('ticket_in')) {
-            if ($tiket->total <= 0) {
-                $tiket->update([
-                    "tiket_masuk" => is_null($tiket->tiket_masuk) ? now() : $tiket->tiket_masuk,
-                    "is_pay" => 1
-                ]);
+        if (isset($tiket)) {
+            if (auth()->user()->hasRole('ticket_in')) {
+                if ($tiket->total <= 0) {
+                    $tiket->update([
+                        "tiket_masuk" => is_null($tiket->tiket_masuk) ? now() : $tiket->tiket_masuk,
+                        "is_pay" => 1
+                    ]);
 
-                return back()->with('info', 'Pengunjung sudah melunasi pembayaran');
+                    return back()->with('info', 'Pengunjung sudah melunasi pembayaran atas nama ' . $tiket->buyer_name);
+                } else {
+                    return back()->with('warning', 'Pengunjung belum melunasi pembayaran atas nama ' . $tiket->buyer_name);
+                }
             } else {
-                return back()->with('warning', 'Pengunjung belum melunasi pembayaran');
+                $tiket->update(["tiket_keluar" => now()]);
+                return back()->with('info', 'Scan berhasil');
             }
         } else {
-            $tiket->update(["tiket_keluar" => now()]);
-            return back()->with('info', 'Scan berhasil');
+            return back()->with('error', 'Invoice ' . $input['invoice_number'] . ' tidak ditemukan');
         }
     }
 
@@ -148,7 +154,7 @@ class PemesananTiketController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(TicketRequest $request, $id)
     {
         $input = $request->all();
         $tiket = PemesananTiket::find($id);

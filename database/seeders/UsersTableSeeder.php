@@ -20,7 +20,7 @@ class UsersTableSeeder extends Seeder
 
         $owner = User::create([
             'name' => 'Owner',
-            'email' => 'owner@main.com',
+            'email' => 'owner@gmail.com',
             'password' => Hash::make('admin123'),
             'remember_token' => NULL,
 
@@ -29,7 +29,7 @@ class UsersTableSeeder extends Seeder
         ]);
         $admin = User::create([
             'name' => 'Admin',
-            'email' => 'admin@main.com',
+            'email' => 'admin@gmail.com',
             'password' => Hash::make('admin123'),
             'remember_token' => NULL,
 
@@ -38,7 +38,7 @@ class UsersTableSeeder extends Seeder
         ]);
         $ticket_in = User::create([
             'name' => 'Petugas 1',
-            'email' => 'ticket_in@main.com',
+            'email' => 'ticket_in@gmail.com',
             'password' => Hash::make('admin123'),
             'remember_token' => NULL,
 
@@ -47,7 +47,7 @@ class UsersTableSeeder extends Seeder
         ]);
         $ticket_out = User::create([
             'name' => 'Petugas 2',
-            'email' => 'ticket_out@main.com',
+            'email' => 'ticket_out@gmail.com',
             'password' => Hash::make('admin123'),
             'remember_token' => NULL,
 

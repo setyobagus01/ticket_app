@@ -1,6 +1,15 @@
 @extends('layouts.app')
 @section('container')
     @include('flash-message')
+    @if ($errors->any())
+        <ul class="list-group mb-5">
+            @foreach ($errors->all() as $message)
+                <li class="list-group-item list-group-item-danger">
+                    {{ $message }}
+                </li>
+            @endforeach
+        </ul>
+    @endif
     <div class="pd-20 card-box mb-30">
         <div class="clearfix">
             <div class="pull-left">
@@ -20,12 +29,12 @@
                 </div>
                 <div class="text-right">
 
-                <button class="btn btn-primary" href="#" type="submit">
-                    Scan
-                </button>
+                    <button class="btn btn-primary" href="#" type="submit">
+                        Scan
+                    </button>
 
 
-            </div>
+                </div>
             </div>
 
         </form>
